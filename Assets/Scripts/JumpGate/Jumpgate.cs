@@ -4,8 +4,12 @@ using System.Collections;
 public class Jumpgate : MonoBehaviour
 {
 
+    public float rotationRate = 0.1f;
+
     public Ship ship;
     public Fuel fuel;
+
+    bool active;
 
     EventManager eventManager;
 
@@ -26,12 +30,27 @@ public class Jumpgate : MonoBehaviour
             amount = 1000
         };
 
+        active = false;
+
         eventManager = GameObject.Find("EventManager").GetComponent<EventManager>();
     }
 
     void Update()
     {
 
+        if (active) ActiveAnimations();
+
+    }
+
+    void ActiveAnimations()
+    {
+        transform.Rotate(new Vector3(0f, 0f, rotationRate * Time.deltaTime));
+    }
+
+    public void OnActivateButton()
+    {
+        if (!active) active = true;
+        else active = false;
     }
 
     public bool HasShip()
