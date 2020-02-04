@@ -11,6 +11,7 @@ public class Jumpgate : MonoBehaviour
     public bool Active { get; private set; }
 
     EventManager eventManager;
+    JumpgateController jumpgateController;
 
     void OnEnable()
     {
@@ -32,6 +33,7 @@ public class Jumpgate : MonoBehaviour
         Active = false;
 
         eventManager = GameObject.Find("EventManager").GetComponent<EventManager>();
+        jumpgateController = GetComponent<JumpgateController>();
     }
 
     void Update()
@@ -71,6 +73,7 @@ public class Jumpgate : MonoBehaviour
         fuel.ChangeAmount(-ship.mass);
         ship.Jump();
         ship = null;
+        jumpgateController.DeactivateTractorBeams();
     }
 
     public bool IsYawAligned()
@@ -82,7 +85,7 @@ public class Jumpgate : MonoBehaviour
     public bool IsPitchAligned()
     {
         if (!HasShip()) return false;
-        return (int) GetComponent<JumpgateController>().Yaw == (int) ship.destination.pitch;
+        return (int) GetComponent<JumpgateController>().Pitch == (int) ship.destination.pitch;
     }
 
     public bool IsCorrectlyAligned()

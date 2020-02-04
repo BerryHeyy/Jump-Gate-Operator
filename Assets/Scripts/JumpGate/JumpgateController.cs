@@ -65,26 +65,36 @@ public class JumpgateController : MonoBehaviour
 
             if (jumpgate.ship.locked)
             {
-                beam1.SetActive(true);
-                beam2.SetActive(true);
-                beam1.GetComponent<LineRenderer>().SetPosition(0, beam1.transform.position);
-                beam1.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Ship").transform.position);
-
-                beam2.GetComponent<LineRenderer>().SetPosition(0, beam2.transform.position);
-                beam2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Ship").transform.position);
-
-                tractorBeamButton.color = new Vector4(0f, 0.7386749f, 1f, 1f);
+                ActivateTractorBeams();
             }
             else
             {
-                beam1.SetActive(false);
-                beam2.SetActive(false);
-
-                tractorBeamButton.color = Color.white;
+                DeactivateTractorBeams();
             }
 
             updateValues();
         }
+    }
+
+    public void ActivateTractorBeams()
+    {
+        beam1.SetActive(true);
+        beam2.SetActive(true);
+        beam1.GetComponent<LineRenderer>().SetPosition(0, beam1.transform.position);
+        beam1.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Ship").transform.position);
+
+        beam2.GetComponent<LineRenderer>().SetPosition(0, beam2.transform.position);
+        beam2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Ship").transform.position);
+
+        tractorBeamButton.color = new Vector4(0f, 0.7386749f, 1f, 1f);
+    }
+
+    public void DeactivateTractorBeams()
+    {
+        beam1.SetActive(false);
+        beam2.SetActive(false);
+
+        tractorBeamButton.color = Color.white;
     }
 
     public bool CanAlign()
@@ -141,7 +151,11 @@ public class JumpgateController : MonoBehaviour
 
     public void onJumpButton()
     {
-        if (jumpgate.CanJump()) GameObject.Find("EventManager").GetComponent<EventManager>().InvokeOnJump();
+        if (jumpgate.CanJump())
+        {
+            jumpgate.ship.GetComponent<Animator>().Play("ShipJumpAnimation");
+            GetComponent<JumpgateAnimation>().JumpInProgress = true;
+        }
         else showingJumpAlert = true;
     }
 

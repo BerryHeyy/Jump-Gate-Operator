@@ -9,7 +9,7 @@ public class JumpgateAnimation : MonoBehaviour
 
     Jumpgate jumpgate;
 
-
+    public bool JumpInProgress { get; set; }
 
     void Start()
     {
@@ -22,11 +22,27 @@ public class JumpgateAnimation : MonoBehaviour
         {
             ActiveAnimations();
         }
+        if (JumpInProgress)
+        {
+            if (!jumpgate.ship.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ShipJumpAnimation"))
+            {
+                // Play all jump effects
+                EndJumpEffects();
+                JumpInProgress = false;
+                // Invoke the OnJump() event
+                GameObject.Find("EventManager").GetComponent<EventManager>().InvokeOnJump();
+            }
+        }
     }
 
     void ActiveAnimations()
     {
         transform.Rotate(new Vector3(0f, 0f, rotationRate * Time.deltaTime));
+    }
+
+    void EndJumpEffects()
+    {
+
     }
 
     
