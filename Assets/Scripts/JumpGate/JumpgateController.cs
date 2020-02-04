@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class JumpgateController : MonoBehaviour
 {
 
-    public float yaw, pitch;
-    public float yawDeviation, pitchDeviation;
-    public float jumpFailedTimer = 2f;
+    public float increase = 10f;
+    public float deviation = 0.05f;
+
+    public float Yaw { get; private set; }
+    public float Pitch { get; private set; }
+    public float YawDeviation { get; private set; }
+    public float PitchDeviation { get; private set; }
+    public float JumpFailedTimer { get; private set; }
     public GameObject jumpFailedAlert;
 
     public GameObject beam1;
@@ -21,8 +26,7 @@ public class JumpgateController : MonoBehaviour
     Jumpgate jumpgate;
     Transform gameSpace;
 
-    float increase = 10f;
-    float deviation = 0.05f;
+
 
     void Start()
     {
@@ -39,20 +43,20 @@ public class JumpgateController : MonoBehaviour
         if (jumpgate.HasShip())
         {
 
-            if (aligning)
+            if (CanAlign())
             {
                 Align();
             }
 
             if (showingJumpAlert)
             {
-                jumpFailedTimer -= Time.smoothDeltaTime;
+                JumpFailedTimer -= Time.smoothDeltaTime;
 
-                if (jumpFailedTimer >= 0) jumpFailedAlert.SetActive(true);
+                if (JumpFailedTimer >= 0) jumpFailedAlert.SetActive(true);
                 else
                 {
                     jumpFailedAlert.SetActive(false);
-                    jumpFailedTimer = 2f;
+                    JumpFailedTimer = 2f;
                     showingJumpAlert = false;
                 }
 
@@ -83,6 +87,49 @@ public class JumpgateController : MonoBehaviour
         }
     }
 
+    public bool CanAlign()
+    {
+        if (!jumpgate.Active) return false;
+        if (!aligning) return false;
+        return true;
+    }
+
+    public void Align()
+    {
+        if (YawDeviation == 0 && PitchDeviation == 0) { aligning = false; return; }
+
+        if (YawDeviation > 0)
+        {
+            Yaw -= deviation;
+            YawDeviation -= deviation;
+            gameSpace.Rotate(new Vector3(0f, -deviation, 0f));
+            if (YawDeviation < 0) YawDeviation = 0f;
+        }
+        else if (YawDeviation < 0)
+        {
+            Yaw += deviation;
+            YawDeviation += deviation;
+            gameSpace.Rotate(new Vector3(0f, deviation, 0f));
+            if (YawDeviation > 0) YawDeviation = 0f;
+        }
+
+        if (PitchDeviation > 0)
+        {
+            Pitch -= deviation;
+            PitchDeviation -= deviation;
+            gameSpace.Rotate(new Vector3(-deviation, 0f, 0f));
+            if (PitchDeviation < 0) PitchDeviation = 0f;
+        }
+        else if (PitchDeviation < 0f)
+        {
+            Pitch += deviation;
+            PitchDeviation += deviation;
+            gameSpace.Rotate(new Vector3(deviation, 0f, 0f));
+            if (PitchDeviation > 0) PitchDeviation = 0f;
+        }
+
+    }
+
     public void onTractorBeamButton()
     {
         if (jumpgate.HasShip() && !aligning)
@@ -98,74 +145,38 @@ public class JumpgateController : MonoBehaviour
         else showingJumpAlert = true;
     }
 
-    public void Align()
-    {
-        if (yawDeviation == 0 && pitchDeviation == 0) { aligning = false; return; }
-
-        if (yawDeviation > 0)
-        {
-            yaw -= deviation;
-            yawDeviation -= deviation;
-            gameSpace.Rotate(new Vector3(0f, -deviation, 0f));
-            if (yawDeviation < 0) yawDeviation = 0f;
-        }
-        else if (yawDeviation < 0)
-        {
-            yaw += deviation;
-            yawDeviation += deviation;
-            gameSpace.Rotate(new Vector3(0f, deviation, 0f));
-            if (yawDeviation > 0) yawDeviation = 0f;
-        }
-
-        if (pitchDeviation > 0)
-        {
-            pitch -= deviation;
-            pitchDeviation -= deviation;
-            gameSpace.Rotate(new Vector3(-deviation, 0f, 0f));
-            if (pitchDeviation < 0) pitchDeviation = 0f;
-        }
-        else if (pitchDeviation < 0f)
-        {
-            pitch += deviation;
-            pitchDeviation += deviation;
-            gameSpace.Rotate(new Vector3(deviation, 0f, 0f));
-            if (pitchDeviation > 0) pitchDeviation = 0f;
-        }
-
-    }
-
     public void onAlignButton()
     {
-        if (jumpgate.ship.locked) aligning = true;
+        if (jumpgate.ship.locked && jumpgate.Active) aligning = true;
     }
 
     public void onDeviationButtonRight()
     {
-        yawDeviation += increase;
+        YawDeviation += increase;
     }
     public void onDeviationButtonLeft()
     {
-        yawDeviation -= increase;
+        YawDeviation -= increase;
     }
     public void onDeviationButtonUp()
     {
-        pitchDeviation += increase;
+        PitchDeviation += increase;
     }
     public void onDeviationButtonDown()
     {
-        pitchDeviation -= increase;
+        PitchDeviation -= increase;
     }
 
     // Display Values
 
-    public TextMeshProUGUI yawDeviationValue;
-    public TextMeshProUGUI pitchDeviationValue;
+    public TextMeshProUGUI YawDeviationValue;
+    public TextMeshProUGUI PitchDeviationValue;
     
 
     void updateValues()
     {
-        yawDeviationValue.SetText((int) yawDeviation + "°");
-        pitchDeviationValue.SetText((int) pitchDeviation + "°");
+        YawDeviationValue.SetText((int) YawDeviation + "°");
+        PitchDeviationValue.SetText((int) PitchDeviation + "°");
     }
 
 }

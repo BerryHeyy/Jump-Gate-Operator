@@ -4,12 +4,11 @@ using System.Collections;
 public class Jumpgate : MonoBehaviour
 {
 
-    public float rotationRate = 0.1f;
 
     public Ship ship;
     public Fuel fuel;
 
-    bool active;
+    public bool Active { get; private set; }
 
     EventManager eventManager;
 
@@ -30,7 +29,7 @@ public class Jumpgate : MonoBehaviour
             amount = 1000
         };
 
-        active = false;
+        Active = false;
 
         eventManager = GameObject.Find("EventManager").GetComponent<EventManager>();
     }
@@ -38,19 +37,13 @@ public class Jumpgate : MonoBehaviour
     void Update()
     {
 
-        if (active) ActiveAnimations();
 
-    }
-
-    void ActiveAnimations()
-    {
-        transform.Rotate(new Vector3(0f, 0f, rotationRate * Time.deltaTime));
     }
 
     public void OnActivateButton()
     {
-        if (!active) active = true;
-        else active = false;
+        if (!Active) Active = true;
+        else Active = false;
     }
 
     public bool HasShip()
@@ -63,6 +56,7 @@ public class Jumpgate : MonoBehaviour
         if (!HasShip()) return false;
         if (!ship.locked) return false;
         if (!IsCorrectlyAligned()) return false;
+        if (!Active) return false;
         return true;
     }
 
@@ -82,13 +76,13 @@ public class Jumpgate : MonoBehaviour
     public bool IsYawAligned()
     {
         if (!HasShip()) return false;
-        return (int) GetComponent<JumpgateController>().yaw == (int) ship.destination.yaw;
+        return (int) GetComponent<JumpgateController>().Yaw == (int) ship.destination.yaw;
     }
 
     public bool IsPitchAligned()
     {
         if (!HasShip()) return false;
-        return (int) GetComponent<JumpgateController>().pitch == (int) ship.destination.pitch;
+        return (int) GetComponent<JumpgateController>().Yaw == (int) ship.destination.pitch;
     }
 
     public bool IsCorrectlyAligned()

@@ -73,8 +73,8 @@ public class DestinationScreen : MonoBehaviour
 
     void UpdateDeviations()
     {
-        yawValue.SetText((int) jumpgateController.yaw + "°");
-        pitchValue.SetText((int) jumpgateController.pitch + "°");
+        yawValue.SetText((int) jumpgateController.Yaw + "°");
+        pitchValue.SetText((int) jumpgateController.Pitch + "°");
 
         if (jumpgate.IsYawAligned()) yawCheck.sprite = check;
         else yawCheck.sprite = cross;

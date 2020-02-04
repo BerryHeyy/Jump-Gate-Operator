@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Info\ShipType.cs" />
      <Compile Include="Assets\Scripts\Interactable\WorkbenchDisplay.cs" />
      <Compile Include="Assets\Scripts\JumpGate\Jumpgate.cs" />
+     <Compile Include="Assets\Scripts\JumpGate\JumpgateAnimation.cs" />
      <Compile Include="Assets\Scripts\JumpGate\JumpgateController.cs" />
      <Compile Include="Assets\Scripts\JumpGate\Ship.cs" />
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />

@@ -2208,7 +2208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3036070f473de41a19b0406e19668b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationRate: 2
   ship: {fileID: 0}
 --- !u!114 &346401338
 MonoBehaviour:
@@ -2222,17 +2221,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde60d1abcd22a240afb3245808f1662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yaw: 0
-  pitch: 0
-  yawDeviation: 0
-  pitchDeviation: 0
-  jumpFailedTimer: 2
+  increase: 10
+  deviation: 0.05
   jumpFailedAlert: {fileID: 1431400006}
   beam1: {fileID: 1190416713}
   beam2: {fileID: 1158929195}
   tractorBeamButton: {fileID: 269087359}
-  yawDeviationValue: {fileID: 1815237930}
-  pitchDeviationValue: {fileID: 867437303}
+  YawDeviationValue: {fileID: 1815237930}
+  PitchDeviationValue: {fileID: 867437303}
+--- !u!114 &346401339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346401335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac4409d897035b499c9bf976925b623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationRate: 2
 --- !u!1 &350100282
 GameObject:
   m_ObjectHideFlags: 0
@@ -3752,8 +3761,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0.1
+    m_NormalBias: 0.09
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -6732,7 +6741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1190416714
 Transform:
   m_ObjectHideFlags: 0
