@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JumpgateAnimation : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class JumpgateAnimation : MonoBehaviour
     Jumpgate jumpgate;
 
     public bool JumpInProgress { get; set; }
+    bool playerJumpEffects = false;
+    int playerJumpEffectDuration = 3;
 
     void Start()
     {
@@ -31,7 +34,29 @@ public class JumpgateAnimation : MonoBehaviour
                 JumpInProgress = false;
                 // Invoke the OnJump() event
                 GameObject.Find("EventManager").GetComponent<EventManager>().InvokeOnJump();
+                playerJumpEffects = true;
             }
+        }
+
+        if (playerJumpEffects)
+        {
+            Image flashImage = GameObject.Find("UI").transform.GetChild(1).GetComponent<Image>();
+            flashImage.color = new Vector4(1f, 1f, 1f, 1f);
+            
+            if (playerJumpEffectDuration > 0)
+            {
+                playerJumpEffectDuration--;
+            } else
+            {
+                playerJumpEffectDuration = 3;
+                playerJumpEffects = false;
+            }
+
+
+        } else
+        {
+            Image flashImage = GameObject.Find("UI").transform.GetChild(1).GetComponent<Image>();
+            flashImage.color = new Vector4(1f, 1f, 1f, 0f);
         }
     }
 

@@ -20,8 +20,8 @@ public class Ship : MonoBehaviour
         destination = new Destination
         {
             name = "Chronus",
-            pitch = 80f,
-            yaw = 40,
+            pitch = -70f,
+            yaw = 60f,
             distance = 35,
             fuel = 500
         };
