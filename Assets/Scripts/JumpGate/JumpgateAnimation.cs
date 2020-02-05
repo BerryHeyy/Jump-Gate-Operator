@@ -6,13 +6,18 @@ using UnityEngine.UI;
 public class JumpgateAnimation : MonoBehaviour
 {
 
-    public float rotationRate = 0.1f;
+    public float rotationRate = 2f;
+    public float rotationSpeedupRate = 2f;
+    public float currentRotationSpeed = 2f;
 
     Jumpgate jumpgate;
 
     public bool JumpInProgress { get; set; }
+    public bool CooldownInProgress { get; private set; }
     bool playerJumpEffects = false;
     int playerJumpEffectDuration = 3;
+
+
 
     void Start()
     {
@@ -21,12 +26,31 @@ public class JumpgateAnimation : MonoBehaviour
 
     void LateUpdate()
     {
-        if (jumpgate.Active)
+        if (jumpgate.Active && !JumpInProgress && !CooldownInProgress)
         {
             ActiveAnimations();
         }
+
+        if (CooldownInProgress)
+        {
+            currentRotationSpeed -= rotationSpeedupRate;
+
+            if (currentRotationSpeed <= rotationRate)
+            {
+                currentRotationSpeed = rotationRate;
+                CooldownInProgress = false;
+            }
+
+            transform.Rotate(new Vector3(0f, 0f, currentRotationSpeed * Time.deltaTime));
+        }
+
         if (JumpInProgress)
         {
+            // Run while jumping
+            currentRotationSpeed += rotationSpeedupRate;
+            transform.Rotate(new Vector3(0f, 0f, currentRotationSpeed * Time.deltaTime));
+
+            // Run at end of jump
             if (!jumpgate.ship.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ShipJumpAnimation"))
             {
                 // Play all jump effects
@@ -35,6 +59,7 @@ public class JumpgateAnimation : MonoBehaviour
                 // Invoke the OnJump() event
                 GameObject.Find("EventManager").GetComponent<EventManager>().InvokeOnJump();
                 playerJumpEffects = true;
+                CooldownInProgress = true;
             }
         }
 
