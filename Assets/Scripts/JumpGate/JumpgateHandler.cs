@@ -6,7 +6,6 @@ public class JumpgateHandler : MonoBehaviour
 
 
     public Ship ship;
-    public Fuel fuel;
 
     public bool Active { get; private set; }
 
@@ -25,10 +24,6 @@ public class JumpgateHandler : MonoBehaviour
 
     void Start()
     {
-        fuel = new Fuel("Exotic Matter")
-        {
-            amount = 1000
-        };
 
         Active = false;
 
@@ -70,7 +65,6 @@ public class JumpgateHandler : MonoBehaviour
 
     public void Jump()
     {
-        fuel.ChangeAmount(-ship.mass);
         ship.Jump();
         ship = null;
         jumpgateController.DeactivateTractorBeams();

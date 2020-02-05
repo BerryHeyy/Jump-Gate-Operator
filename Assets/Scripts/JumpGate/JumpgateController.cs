@@ -24,14 +24,13 @@ public class JumpgateController : MonoBehaviour
     bool showingJumpAlert;
 
     JumpgateHandler jumpgate;
-    Transform gameSpace;
-
+    CameraController cameraController;
 
 
     void Start()
     {
         jumpgate = gameObject.GetComponent<JumpgateHandler>();
-        gameSpace = GameObject.Find("GameSpace").transform;
+        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         showingJumpAlert = false;
 
         
@@ -112,14 +111,16 @@ public class JumpgateController : MonoBehaviour
         {
             Yaw -= deviation;
             YawDeviation -= deviation;
-            gameSpace.Rotate(new Vector3(0f, -deviation, 0f));
+            cameraController.ChangeSkyboxRotation(0f, -deviation, 0f);
+            //toRotate.Rotate(new Vector3(0f, -deviation, 0f));
             if (YawDeviation < 0) YawDeviation = 0f;
         }
         else if (YawDeviation < 0)
         {
             Yaw += deviation;
             YawDeviation += deviation;
-            gameSpace.Rotate(new Vector3(0f, deviation, 0f));
+            cameraController.ChangeSkyboxRotation(0f, deviation, 0f);
+            //toRotate.Rotate(new Vector3(0f, deviation, 0f));
             if (YawDeviation > 0) YawDeviation = 0f;
         }
 
@@ -127,14 +128,16 @@ public class JumpgateController : MonoBehaviour
         {
             Pitch -= deviation;
             PitchDeviation -= deviation;
-            gameSpace.Rotate(new Vector3(-deviation, 0f, 0f));
+            cameraController.ChangeSkyboxRotation(-deviation, 0f, 0f);
+            //toRotate.Rotate(new Vector3(-deviation, 0f, 0f));
             if (PitchDeviation < 0) PitchDeviation = 0f;
         }
         else if (PitchDeviation < 0f)
         {
             Pitch += deviation;
             PitchDeviation += deviation;
-            gameSpace.Rotate(new Vector3(deviation, 0f, 0f));
+            cameraController.ChangeSkyboxRotation(deviation, 0f, 0f);
+            //toRotate.Rotate(new Vector3(deviation, 0f, 0f));
             if (PitchDeviation > 0) PitchDeviation = 0f;
         }
 

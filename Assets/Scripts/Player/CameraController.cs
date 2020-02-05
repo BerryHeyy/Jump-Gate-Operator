@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
     public float mouseSensitivity = 100f;
+
+    public Material skyBoxMaterial;
 
     private float xRotation = 0f;
 
@@ -44,6 +45,18 @@ public class CameraController : MonoBehaviour
 
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             player.Rotate(Vector3.up * mouseX);
+
         }
     }
+
+    public void ChangeSkyboxRotation(float x, float y, float z)
+    {
+
+        skyBoxMaterial.SetFloat("_RotationX", skyBoxMaterial.GetFloat("_RotationX") + x);
+        skyBoxMaterial.SetFloat("_RotationY", skyBoxMaterial.GetFloat("_RotationY") + y);
+        skyBoxMaterial.SetFloat("_RotationZ", skyBoxMaterial.GetFloat("_RotationZ") + z);
+
+    }
+
+    
 }
