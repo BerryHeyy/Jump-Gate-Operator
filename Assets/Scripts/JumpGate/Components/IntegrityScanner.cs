@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ModelTypes : MonoBehaviour
+public class IntegrityScanner : MonoBehaviour
 {
 
     // Use this for initialization

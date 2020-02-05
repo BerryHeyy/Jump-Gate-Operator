@@ -8,7 +8,7 @@ public class DestinationScreen : MonoBehaviour
 {
 
     public JumpgateController jumpgateController;
-    Jumpgate jumpgate;
+    JumpgateHandler jumpgate;
 
     public TextMeshProUGUI destinationValue;
     public TextMeshProUGUI distanceValue;
@@ -40,7 +40,7 @@ public class DestinationScreen : MonoBehaviour
 
     void Start()
     {
-        jumpgate = jumpgateController.gameObject.GetComponent<Jumpgate>();
+        jumpgate = jumpgateController.gameObject.GetComponent<JumpgateHandler>();
     }
 
     void Update()

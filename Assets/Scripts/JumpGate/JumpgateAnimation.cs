@@ -10,7 +10,7 @@ public class JumpgateAnimation : MonoBehaviour
     public float rotationSpeedupRate = 2f;
     public float currentRotationSpeed = 2f;
 
-    Jumpgate jumpgate;
+    JumpgateHandler jumpgate;
 
     public bool JumpInProgress { get; set; }
     public bool CooldownInProgress { get; private set; }
@@ -21,7 +21,8 @@ public class JumpgateAnimation : MonoBehaviour
 
     void Start()
     {
-        jumpgate = GetComponent<Jumpgate>();
+        jumpgate = GetComponent<JumpgateHandler>();
+        
     }
 
     void LateUpdate()

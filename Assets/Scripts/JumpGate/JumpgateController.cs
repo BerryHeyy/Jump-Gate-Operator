@@ -23,14 +23,14 @@ public class JumpgateController : MonoBehaviour
     bool aligning;
     bool showingJumpAlert;
 
-    Jumpgate jumpgate;
+    JumpgateHandler jumpgate;
     Transform gameSpace;
 
 
 
     void Start()
     {
-        jumpgate = gameObject.GetComponent<Jumpgate>();
+        jumpgate = gameObject.GetComponent<JumpgateHandler>();
         gameSpace = GameObject.Find("GameSpace").transform;
         showingJumpAlert = false;
 

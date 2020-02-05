@@ -42,7 +42,7 @@ public class Ship : MonoBehaviour
         // Set jumpgate ship to this
         if (!instantiated)
         {
-            GameObject.Find("Jumpgate").GetComponent<Jumpgate>().ShipArrived(this);
+            GameObject.Find("Jumpgate").GetComponent<JumpgateHandler>().ShipArrived(this);
             instantiated = true;
         }
 

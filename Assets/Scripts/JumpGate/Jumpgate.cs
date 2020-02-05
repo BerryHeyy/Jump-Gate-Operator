@@ -4,93 +4,33 @@ using System.Collections;
 public class Jumpgate : MonoBehaviour
 {
 
+    // Position
+    public float yaw, pitch;
+    // Jump
+    public bool canJump;
+    // Fuel
+    JumpgateFuel jumpgateFuel;
+    // Powerplant
+    Powerplant powerplant;
+    // Components
+    GravityGenerator gravityGenerator;
+    OxygenGenerator oxygenGenerator;
+    WarrantScanner warrantScanner;
+    IntegrityScanner integrityScanner;
+    DiagnosticsScanner diagnosticsScanner;
 
-    public Ship ship;
-    public Fuel fuel;
-
-    public bool Active { get; private set; }
-
-    EventManager eventManager;
-    JumpgateController jumpgateController;
-
-    void OnEnable()
-    {
-        EventManager.OnJump += Jump;
-    }
-
-    void OnDisable()
-    {
-
-    }
+    TractorBeam tractorBeam;
 
     void Start()
     {
-        fuel = new Fuel("Exotic Matter")
-        {
-            amount = 1000
-        };
+        // Initialize components
+        gravityGenerator = gameObject.AddComponent<GravityGenerator>();
+        oxygenGenerator = gameObject.AddComponent<OxygenGenerator>();
+        warrantScanner = gameObject.AddComponent<WarrantScanner>();
+        integrityScanner = gameObject.AddComponent<IntegrityScanner>();
+        diagnosticsScanner = gameObject.AddComponent<DiagnosticsScanner>();
 
-        Active = false;
-
-        eventManager = GameObject.Find("EventManager").GetComponent<EventManager>();
-        jumpgateController = GetComponent<JumpgateController>();
-    }
-
-    void Update()
-    {
-
-
-    }
-
-    public void OnActivateButton()
-    {
-        if (!Active) Active = true;
-        else Active = false;
-    }
-
-    public bool HasShip()
-    {
-        return ship != null;
-    }
-
-    public bool CanJump()
-    {
-        if (!HasShip()) return false;
-        if (!ship.locked) return false;
-        if (!IsCorrectlyAligned()) return false;
-        if (!Active) return false;
-        return true;
-    }
-
-    public void ShipArrived(Ship ship)
-    {
-        this.ship = ship;
-        eventManager.InvokeOnArrive(ship);
-    }
-
-    public void Jump()
-    {
-        fuel.ChangeAmount(-ship.mass);
-        ship.Jump();
-        ship = null;
-        jumpgateController.DeactivateTractorBeams();
-    }
-
-    public bool IsYawAligned()
-    {
-        if (!HasShip()) return false;
-        return (int) GetComponent<JumpgateController>().Yaw == (int) ship.destination.yaw;
-    }
-
-    public bool IsPitchAligned()
-    {
-        if (!HasShip()) return false;
-        return (int) GetComponent<JumpgateController>().Pitch == (int) ship.destination.pitch;
-    }
-
-    public bool IsCorrectlyAligned()
-    {
-        return IsYawAligned() && IsPitchAligned();
+        tractorBeam = gameObject.AddComponent<TractorBeam>();
     }
 
 }

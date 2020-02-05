@@ -9,7 +9,7 @@ public class ShipInformationScreen : MonoBehaviour
     public TextMeshProUGUI gaLIDValue;
     public TextMeshProUGUI crimeStatValue;
 
-    Jumpgate jumpgate;
+    JumpgateHandler jumpgate;
 
     void OnEnable()
     {
@@ -25,7 +25,7 @@ public class ShipInformationScreen : MonoBehaviour
 
     void Start()
     {
-        jumpgate = GameObject.Find("Jumpgate").GetComponent<Jumpgate>();
+        jumpgate = GameObject.Find("Jumpgate").GetComponent<JumpgateHandler>();
     }
 
     void Update()

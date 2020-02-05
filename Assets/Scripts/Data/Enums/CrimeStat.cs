@@ -19,6 +19,10 @@ public class CrimeStat
     public static IEnumerable<CrimeStat> Values {
         get {
             yield return CLEAN;
+            yield return PETTY_CRIMINAL;
+            yield return CRIMINAL;
+            yield return DANGEROUS_CRIMINAL;
+            yield return DEADLY;
         }
     }
 

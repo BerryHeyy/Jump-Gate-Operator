@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShipType : MonoBehaviour
+public class ShipType
 {
 
     public Manufacturer manufacturer;
