@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Data\Enums\CrimeStat.cs" />
     <Compile Include="Assets\Scripts\Data\Destination.cs" />
+    <Compile Include="Assets\Scripts\Data\Enums\PowerplantFuelType.cs" />
     <Compile Include="Assets\Scripts\Data\JumpgateFuel.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\JumpgateFuelType.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\ModelTypes.cs" />

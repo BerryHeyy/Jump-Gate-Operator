@@ -15,10 +15,19 @@ public class JumpgateFuel
         this.jumpgateFuelType = jumpgateFuelType;
     }
 
-    public bool changeAmount(float amount)
+    public bool useFuel(float amount)
     {
-        if (this.amount + amount > this.maxAmount) return false;
-        if (this.amount + amount < 0) return false;
+        float toUseFuel = amount * jumpgateFuelType.Efficiency;
+
+        if (this.amount - toUseFuel < 0) return false;
+
+        this.amount -= toUseFuel;
+        return true;
+    }
+
+    public bool addFuel(float amount)
+    {
+        if (this.amount + amount < this.maxAmount) return false;
 
         this.amount += amount;
         return true;
